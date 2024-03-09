@@ -1,0 +1,18 @@
+resources:
+  - name: instance-1
+    type: compute.v1.instance
+    properties:
+      zone: us-central1-a
+      machineType: zones/us-central1-a/machineTypes/e2-micro
+      disks:
+        - deviceName: boot
+          type: PERSISTENT
+          boot: true
+          autoDelete: true
+          initializeParams:
+            sourceImage: projects/debian-cloud/global/images/family/debian-10
+      networkInterfaces:
+        - network: global/networks/default
+          accessConfigs:
+            - name: External NAT
+              type: ONE_TO_ONE_NAT

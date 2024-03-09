@@ -2,6 +2,8 @@ require("dotenv").config();
 const { Client, GatewayIntentBits } = require("discord.js");
 const admin = require("firebase-admin");
 
+const http = require("http");
+
 // Inicializa Firebase Admin con las credenciales
 console.log("Env firebase", process.env.FIREBASE_CREDENTIALS_PATH);
 console.log("Env Discord bot", process.env.DISCORD_BOT_TOKEN);
@@ -69,6 +71,14 @@ bot.on("voiceStateUpdate", (oldState, newState) => {
       });
   }
 });
+
+// Crea un servidor HTTP que escucha en el puerto 3000
+http
+  .createServer((req, res) => {
+    res.write("Hello! The bot is alive!"); // Escribe una respuesta al cliente
+    res.end(); // Finaliza la respuesta
+  })
+  .listen(3020, () => console.log("Server is listening on port 3020"));
 
 // Iniciar sesión en Discord con el token del bot
 bot.login(process.env.DISCORD_BOT_TOKEN);
